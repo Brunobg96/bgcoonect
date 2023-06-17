@@ -284,6 +284,6 @@ sysctl -p -f /etc/sysctl.d/70-disable-ipv6.conf
 
 # - Execulta instalador
 
-[[ -e Plus ]] && rm Plus
+[[ -e bgssh ]] && rm bgssh
 
 wget raw.githubusercontent.com/Brunobg96/bgcoonect/main/bgssh && chmod 777 bgssh && ./bgssh
