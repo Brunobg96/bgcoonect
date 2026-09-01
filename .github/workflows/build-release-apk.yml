@@ -1,0 +1,41 @@
+name: Gerar APK Produção BG CONNECT Gestor
+
+on:
+  workflow_dispatch:
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Baixar código
+        uses: actions/checkout@v4
+
+      - name: Configurar Java 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+
+      - name: Configurar Gradle
+        uses: gradle/actions/setup-gradle@v4
+
+      - name: Restaurar keystore de produção
+        shell: bash
+        run: |
+          echo "${{ secrets.ANDROID_KEYSTORE_BASE64 }}" | base64 --decode > "$RUNNER_TEMP/bgconnect-release.jks"
+          chmod 600 "$RUNNER_TEMP/bgconnect-release.jks"
+
+      - name: Compilar APK Release assinado
+        env:
+          ANDROID_KEYSTORE_PATH: ${{ runner.temp }}/bgconnect-release.jks
+          ANDROID_KEYSTORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
+          ANDROID_KEY_ALIAS: ${{ secrets.ANDROID_KEY_ALIAS }}
+          ANDROID_KEY_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
+        run: gradle --no-daemon :app:assembleRelease
+
+      - name: Publicar APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: BG-CONNECT-Gestor-Producao
+          path: app/build/outputs/apk/release/app-release.apk
+          if-no-files-found: error

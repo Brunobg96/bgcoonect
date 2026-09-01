@@ -34,7 +34,7 @@ public class MainActivity extends Activity {
         s.setDatabaseEnabled(true);
         s.setAllowFileAccess(true);
         s.setMediaPlaybackRequiresUserGesture(false);
-        s.setUserAgentString(s.getUserAgentString() + " BGConnectAndroid/1.1 PushFCM");
+        s.setUserAgentString(s.getUserAgentString() + " BGConnectAndroid/1.4 Production PushFCM");
 
         CookieManager.getInstance().setAcceptCookie(true);
         CookieManager.getInstance().setAcceptThirdPartyCookies(webView, true);

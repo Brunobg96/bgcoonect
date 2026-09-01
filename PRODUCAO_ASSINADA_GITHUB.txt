@@ -1,0 +1,17 @@
+BG CONNECT Gestor — versão de produção assinada
+
+1) NÃO envie seu arquivo .jks para um repositório público.
+2) No GitHub, abra: Settings > Secrets and variables > Actions > New repository secret.
+3) Crie estes 4 secrets:
+   ANDROID_KEYSTORE_BASE64
+   ANDROID_KEYSTORE_PASSWORD
+   ANDROID_KEY_ALIAS
+   ANDROID_KEY_PASSWORD
+4) O valor ANDROID_KEYSTORE_BASE64 é o conteúdo Base64 do keystore de produção.
+5) Depois vá em Actions > Gerar APK Produção BG CONNECT Gestor > Run workflow.
+6) Baixe o Artifact "BG-CONNECT-Gestor-Producao".
+7) Guarde o keystore e as senhas para sempre. Sem a mesma chave não será possível publicar atualizações sobre o mesmo app.
+
+Pacote Android: com.bgconnect.gestor
+VersionName: 1.4.0
+VersionCode: 5
