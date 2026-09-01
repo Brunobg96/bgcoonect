@@ -34,7 +34,7 @@ public class MainActivity extends Activity {
         s.setDatabaseEnabled(true);
         s.setAllowFileAccess(true);
         s.setMediaPlaybackRequiresUserGesture(false);
-        s.setUserAgentString(s.getUserAgentString() + " BGConnectAndroid/1.5 Production PushFCM NativeOrders");
+        s.setUserAgentString(s.getUserAgentString() + " BGConnectAndroid/1.6 Production PushFCM VoiceClosed");
 
         CookieManager.getInstance().setAcceptCookie(true);
         CookieManager.getInstance().setAcceptThirdPartyCookies(webView, true);
@@ -76,6 +76,7 @@ public class MainActivity extends Activity {
 
     private String urlFromIntent(Intent intent) {
         String id = intent == null ? null : intent.getStringExtra("push_order_id");
+        if ((id == null || id.isEmpty()) && intent != null) id = intent.getStringExtra("order_id");
         if (id != null && id.matches("\\d+")) return START_URL + "?push_order=" + Uri.encode(id);
         return START_URL;
     }

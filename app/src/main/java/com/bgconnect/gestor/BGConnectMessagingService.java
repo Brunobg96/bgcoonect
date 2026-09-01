@@ -2,7 +2,6 @@ package com.bgconnect.gestor;
 
 import android.app.*;
 import android.content.*;
-import android.media.RingtoneManager;
 import android.net.Uri;
 import com.google.firebase.messaging.*;
 import java.util.Map;
@@ -44,7 +43,7 @@ public class BGConnectMessagingService extends FirebaseMessagingService {
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
             return new Notification.Builder(this, BGConnectApp.CHANNEL_NEW_ORDERS);
         }
-        Uri sound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+        Uri sound = Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.novo_pedido);
         return new Notification.Builder(this)
             .setSound(sound)
             .setVibrate(new long[]{0,350,180,350});
