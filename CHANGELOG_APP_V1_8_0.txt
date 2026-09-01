@@ -1,0 +1,15 @@
+BG CONNECT GESTOR - V1.8.0
+
+- Verificação automática de atualização ao abrir o aplicativo.
+- Nova verificação quando o app volta ao primeiro plano (com intervalo de segurança de 5 minutos).
+- Compara o versionCode instalado com o versionCode publicado no painel BG CONNECT.
+- Exibe versão e notas da atualização.
+- Botão "Atualizar agora" abre diretamente o APK publicado no servidor.
+- Suporte a atualização opcional com "Atualizar depois".
+- Suporte a atualização obrigatória: o aviso não pode ser dispensado enquanto a versão instalada estiver desatualizada.
+- Mantido alerta persistente de novos pedidos, Firebase Push, sessão WebView e upload de arquivos.
+
+IMPORTANTE PARA PUBLICAÇÃO
+A versão deste projeto é versionCode 9 / versionName 1.8.0.
+Ao publicar este APK no painel, cadastre Código da versão = 9.
+Para versões futuras, aumente sempre o versionCode (10, 11, 12...).

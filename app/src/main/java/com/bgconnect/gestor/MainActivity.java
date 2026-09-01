@@ -13,12 +13,24 @@ import android.view.*;
 import com.google.firebase.messaging.FirebaseMessaging;
 import org.json.JSONObject;
 
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.nio.charset.StandardCharsets;
+
 public class MainActivity extends Activity {
     private static final String START_URL = "https://bgconnect.kinghost.net/admin.php";
+    private static final String UPDATE_URL = "https://bgconnect.kinghost.net/api/app_distribution.php?action=latest";
+    private static final long UPDATE_RECHECK_MS = 5 * 60 * 1000L;
     private WebView webView;
     private ValueCallback<Uri[]> filePathCallback;
     private static final int FILE_CHOOSER = 501;
     private static final int NOTIFICATION_PERMISSION = 601;
+    private long lastUpdateCheck = 0L;
+    private boolean updateCheckRunning = false;
+    private AlertDialog updateDialog;
 
     @Override public void onCreate(Bundle state) {
         super.onCreate(state);
@@ -35,7 +47,7 @@ public class MainActivity extends Activity {
         s.setDatabaseEnabled(true);
         s.setAllowFileAccess(true);
         s.setMediaPlaybackRequiresUserGesture(false);
-        s.setUserAgentString(s.getUserAgentString() + " BGConnectAndroid/1.7 Production PersistentOrderVoice");
+        s.setUserAgentString(s.getUserAgentString() + " BGConnectAndroid/1.8 Production PersistentOrderVoice AutoUpdate");
 
         CookieManager.getInstance().setAcceptCookie(true);
         CookieManager.getInstance().setAcceptThirdPartyCookies(webView, true);
@@ -73,6 +85,114 @@ public class MainActivity extends Activity {
         });
 
         if (state == null) webView.loadUrl(urlFromIntent(getIntent())); else webView.restoreState(state);
+        checkAppUpdate(true);
+    }
+
+    @Override protected void onResume() {
+        super.onResume();
+        if (System.currentTimeMillis() - lastUpdateCheck >= UPDATE_RECHECK_MS) checkAppUpdate(false);
+    }
+
+    private void checkAppUpdate(boolean immediate) {
+        if (updateCheckRunning) return;
+        if (!immediate && System.currentTimeMillis() - lastUpdateCheck < UPDATE_RECHECK_MS) return;
+        updateCheckRunning = true;
+        new Thread(() -> {
+            HttpURLConnection conn = null;
+            try {
+                URL url = new URL(UPDATE_URL + "&_=" + System.currentTimeMillis());
+                conn = (HttpURLConnection) url.openConnection();
+                conn.setRequestMethod("GET");
+                conn.setConnectTimeout(8000);
+                conn.setReadTimeout(8000);
+                conn.setUseCaches(false);
+                conn.setRequestProperty("Accept", "application/json");
+                conn.setRequestProperty("User-Agent", "BGConnectGestor/1.8 Android");
+                int code = conn.getResponseCode();
+                if (code < 200 || code >= 300) return;
+                String body = readAll(conn.getInputStream());
+                JSONObject root = new JSONObject(body);
+                JSONObject app = root.optJSONObject("app");
+                if (app == null || !app.optBoolean("has_apk", false)) return;
+                int latestCode = app.optInt("version_code", 0);
+                int currentCode = getCurrentVersionCode();
+                if (latestCode <= currentCode) {
+                    runOnUiThread(this::dismissUpdateDialogIfAny);
+                    return;
+                }
+                String version = app.optString("version", "");
+                String notes = app.optString("notes", "");
+                String downloadUrl = app.optString("download_url", "https://bgconnect.kinghost.net/baixar-app.php");
+                boolean force = app.optBoolean("force_update", false);
+                runOnUiThread(() -> showUpdateDialog(version, notes, downloadUrl, force));
+            } catch (Exception ignored) {
+            } finally {
+                if (conn != null) conn.disconnect();
+                lastUpdateCheck = System.currentTimeMillis();
+                updateCheckRunning = false;
+            }
+        }, "bg-app-update-check").start();
+    }
+
+    private String readAll(InputStream input) throws Exception {
+        BufferedReader reader = new BufferedReader(new InputStreamReader(input, StandardCharsets.UTF_8));
+        StringBuilder sb = new StringBuilder();
+        String line;
+        while ((line = reader.readLine()) != null) sb.append(line);
+        reader.close();
+        return sb.toString();
+    }
+
+    private int getCurrentVersionCode() {
+        try {
+            if (Build.VERSION.SDK_INT >= 28) return (int)getPackageManager().getPackageInfo(getPackageName(), 0).getLongVersionCode();
+            return getPackageManager().getPackageInfo(getPackageName(), 0).versionCode;
+        } catch (Exception e) {
+            return 0;
+        }
+    }
+
+    private void showUpdateDialog(String version, String notes, String downloadUrl, boolean force) {
+        if (isFinishing() || (Build.VERSION.SDK_INT >= 17 && isDestroyed())) return;
+        dismissUpdateDialogIfAny();
+        StringBuilder message = new StringBuilder();
+        if (force) message.append("Esta atualização é obrigatória para continuar usando o BG CONNECT Gestor.\n\n");
+        else message.append("Uma nova versão do BG CONNECT Gestor está disponível.\n\n");
+        if (version != null && !version.trim().isEmpty()) message.append("Versão: ").append(version.trim()).append("\n");
+        if (notes != null && !notes.trim().isEmpty()) message.append("\nNovidades:\n").append(notes.trim());
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this)
+            .setTitle("Nova atualização disponível")
+            .setMessage(message.toString())
+            .setPositiveButton("Atualizar agora", (dialog, which) -> openUpdateDownload(downloadUrl));
+        if (!force) builder.setNegativeButton("Atualizar depois", null);
+        updateDialog = builder.create();
+        updateDialog.setCancelable(!force);
+        updateDialog.setCanceledOnTouchOutside(!force);
+        if (force) {
+            updateDialog.setOnShowListener(d -> {
+                updateDialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(v -> openUpdateDownload(downloadUrl));
+            });
+        }
+        updateDialog.show();
+    }
+
+    private void dismissUpdateDialogIfAny() {
+        try {
+            if (updateDialog != null && updateDialog.isShowing()) updateDialog.dismiss();
+        } catch (Exception ignored) {}
+        updateDialog = null;
+    }
+
+    private void openUpdateDownload(String downloadUrl) {
+        try {
+            Uri uri = Uri.parse((downloadUrl == null || downloadUrl.trim().isEmpty())
+                ? "https://bgconnect.kinghost.net/baixar-app.php" : downloadUrl.trim());
+            Intent browser = new Intent(Intent.ACTION_VIEW, uri);
+            startActivity(browser);
+        } catch (Exception e) {
+            Toast.makeText(this, "Não foi possível abrir a página de atualização.", Toast.LENGTH_LONG).show();
+        }
     }
 
     private String urlFromIntent(Intent intent) {
@@ -87,6 +207,7 @@ public class MainActivity extends Activity {
         setIntent(intent);
         stopPersistentOrderAlert();
         if (webView != null) webView.loadUrl(urlFromIntent(intent));
+        checkAppUpdate(true);
     }
 
     private void stopPersistentOrderAlert() {
