@@ -25,6 +25,13 @@ jobs:
           echo "${{ secrets.KEYSTORE_BASE64 }}" | base64 --decode > "$RUNNER_TEMP/bgconnect-release.jks"
           chmod 600 "$RUNNER_TEMP/bgconnect-release.jks"
 
+      - name: Verificar keystore
+        shell: bash
+        run: |
+          test -s "$RUNNER_TEMP/bgconnect-release.jks" || { echo "ERRO: keystore vazia ou ausente"; exit 1; }
+          keytool -list -keystore "$RUNNER_TEMP/bgconnect-release.jks" -storepass '${{ secrets.KEYSTORE_PASSWORD }}' >/dev/null
+          echo "Keystore carregada corretamente"
+
       - name: Compilar APK Release assinado
         env:
           ANDROID_KEYSTORE_PATH: ${{ runner.temp }}/bgconnect-release.jks
