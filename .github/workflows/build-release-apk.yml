@@ -22,15 +22,15 @@ jobs:
       - name: Restaurar keystore de produção
         shell: bash
         run: |
-          echo "${{ secrets.ANDROID_KEYSTORE_BASE64 }}" | base64 --decode > "$RUNNER_TEMP/bgconnect-release.jks"
+          echo "${{ secrets.KEYSTORE_BASE64 }}" | base64 --decode > "$RUNNER_TEMP/bgconnect-release.jks"
           chmod 600 "$RUNNER_TEMP/bgconnect-release.jks"
 
       - name: Compilar APK Release assinado
         env:
           ANDROID_KEYSTORE_PATH: ${{ runner.temp }}/bgconnect-release.jks
-          ANDROID_KEYSTORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
-          ANDROID_KEY_ALIAS: ${{ secrets.ANDROID_KEY_ALIAS }}
-          ANDROID_KEY_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
+          ANDROID_KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
+          ANDROID_KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
+          ANDROID_KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
         run: gradle --no-daemon :app:assembleRelease
 
       - name: Publicar APK
