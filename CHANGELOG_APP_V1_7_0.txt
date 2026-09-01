@@ -1,0 +1,8 @@
+BG CONNECT Gestor V1.7.0
+- Novo alerta persistente de pedido em Foreground Service.
+- A voz novo_pedido.mp3 toca novamente 5 segundos após terminar.
+- O alerta continua com o app em segundo plano/fechado normalmente.
+- Tocar na notificação/abrir o pedido encerra imediatamente o alerta repetitivo.
+- Ao painel sincronizar zero pedidos pendentes, o serviço também é encerrado.
+- Foreground Service usa notificação persistente enquanto o pedido aguarda atendimento.
+- Push FCM deve ser data-only HIGH (incluído no site V11.3.37).

@@ -22,6 +22,7 @@ public class MainActivity extends Activity {
 
     @Override public void onCreate(Bundle state) {
         super.onCreate(state);
+        stopPersistentOrderAlert();
         getWindow().setStatusBarColor(Color.WHITE);
         if (Build.VERSION.SDK_INT >= 23) getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
         requestNotificationPermission();
@@ -34,7 +35,7 @@ public class MainActivity extends Activity {
         s.setDatabaseEnabled(true);
         s.setAllowFileAccess(true);
         s.setMediaPlaybackRequiresUserGesture(false);
-        s.setUserAgentString(s.getUserAgentString() + " BGConnectAndroid/1.6 Production PushFCM VoiceClosed");
+        s.setUserAgentString(s.getUserAgentString() + " BGConnectAndroid/1.7 Production PersistentOrderVoice");
 
         CookieManager.getInstance().setAcceptCookie(true);
         CookieManager.getInstance().setAcceptThirdPartyCookies(webView, true);
@@ -84,7 +85,18 @@ public class MainActivity extends Activity {
     @Override protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
         setIntent(intent);
+        stopPersistentOrderAlert();
         if (webView != null) webView.loadUrl(urlFromIntent(intent));
+    }
+
+    private void stopPersistentOrderAlert() {
+        try {
+            Intent stop = new Intent(this, NewOrderAlertService.class);
+            stop.setAction(NewOrderAlertService.ACTION_STOP);
+            startService(stop);
+        } catch (Exception ignored) {
+            try { stopService(new Intent(this, NewOrderAlertService.class)); } catch(Exception ignored2) {}
+        }
     }
 
     private void requestNotificationPermission() {
@@ -121,7 +133,7 @@ public class MainActivity extends Activity {
         @JavascriptInterface public void updatePendingCount(int count) {
             PendingOrderState.syncCount(MainActivity.this, count);
             NotificationManager nm = (NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE);
-            if (count <= 0 && nm != null) nm.cancelAll();
+            if (count <= 0) { stopPersistentOrderAlert(); if (nm != null) nm.cancelAll(); }
         }
     }
 

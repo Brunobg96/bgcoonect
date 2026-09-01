@@ -21,7 +21,13 @@ public class BGConnectMessagingService extends FirebaseMessagingService {
         String body = value(d.get("body"), "Você recebeu um novo pedido.");
         String orderId = value(d.get("order_id"), "0");
         int pendingCount = PendingOrderState.registerIncoming(this, orderId);
-        showNewOrderNotification(title, body, orderId, pendingCount);
+        Intent alert = new Intent(this, NewOrderAlertService.class);
+        alert.setAction(NewOrderAlertService.ACTION_START);
+        alert.putExtra("order_id", orderId);
+        alert.putExtra("title", title);
+        alert.putExtra("body", body);
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) startForegroundService(alert);
+        else startService(alert);
     }
 
     private String value(String v, String fallback) { return v == null || v.trim().isEmpty() ? fallback : v; }
