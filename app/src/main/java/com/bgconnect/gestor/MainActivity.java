@@ -34,10 +34,11 @@ public class MainActivity extends Activity {
         s.setDatabaseEnabled(true);
         s.setAllowFileAccess(true);
         s.setMediaPlaybackRequiresUserGesture(false);
-        s.setUserAgentString(s.getUserAgentString() + " BGConnectAndroid/1.4 Production PushFCM");
+        s.setUserAgentString(s.getUserAgentString() + " BGConnectAndroid/1.5 Production PushFCM NativeOrders");
 
         CookieManager.getInstance().setAcceptCookie(true);
         CookieManager.getInstance().setAcceptThirdPartyCookies(webView, true);
+        webView.addJavascriptInterface(new NativeBridge(), "BGConnectNative");
 
         webView.setWebViewClient(new WebViewClient() {
             @Override public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest req) {
@@ -53,6 +54,7 @@ public class MainActivity extends Activity {
             @Override public void onPageFinished(WebView view, String url) {
                 super.onPageFinished(view, url);
                 registerPushTokenInPanel(view);
+                installNativePendingSync(view);
             }
         });
 
@@ -102,6 +104,24 @@ public class MainActivity extends Activity {
                 runOnUiThread(() -> view.evaluateJavascript(js, null));
             });
         } catch (Exception ignored) {}
+    }
+
+    private void installNativePendingSync(WebView view) {
+        String js = "(function(){try{"+
+            "function bgNativeSync(){fetch('api/orders.php?status=new',{credentials:'same-origin',cache:'no-store'}).then(function(r){if(!r.ok)throw 0;return r.json();}).then(function(j){if(window.BGConnectNative&&j&&Array.isArray(j.orders))window.BGConnectNative.updatePendingCount(j.orders.length);}).catch(function(){});}"+
+            "bgNativeSync();"+
+            "if(window.__BG_NATIVE_PENDING_TIMER)clearInterval(window.__BG_NATIVE_PENDING_TIMER);"+
+            "window.__BG_NATIVE_PENDING_TIMER=setInterval(bgNativeSync,15000);"+
+            "}catch(e){}})();";
+        runOnUiThread(() -> view.evaluateJavascript(js, null));
+    }
+
+    private final class NativeBridge {
+        @JavascriptInterface public void updatePendingCount(int count) {
+            PendingOrderState.syncCount(MainActivity.this, count);
+            NotificationManager nm = (NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE);
+            if (count <= 0 && nm != null) nm.cancelAll();
+        }
     }
 
     @Override protected void onActivityResult(int requestCode, int resultCode, Intent data) {
