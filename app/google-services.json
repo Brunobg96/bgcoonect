@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "702613953575",
+    "project_id": "bg-connect-51f5f",
+    "storage_bucket": "bg-connect-51f5f.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:702613953575:android:bc1887d855b51e4c81c202",
+        "android_client_info": {
+          "package_name": "com.bgconnect.delivery"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDlT2YM0AfNlU4PJOpXkOtOZOTN1MhIjVg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:702613953575:android:63084516b81f4d1b81c202",
+        "android_client_info": {
+          "package_name": "com.bgconnect.gestor"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDlT2YM0AfNlU4PJOpXkOtOZOTN1MhIjVg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
