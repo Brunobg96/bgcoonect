@@ -8,7 +8,7 @@ import android.os.Build;
 public class BGConnectApp extends Application {
     // Novo ID para aplicar corretamente som, vibração e badge mesmo em aparelhos
     // que já tinham o canal antigo criado.
-    public static final String CHANNEL_NEW_ORDERS = "bgconnect_new_orders_voice_v3";
+    public static final String CHANNEL_NEW_ORDERS = "bgconnect_new_orders_voice_v4";
     public static final String GROUP_NEW_ORDERS = "bgconnect_group_new_orders";
 
     @Override public void onCreate() {
