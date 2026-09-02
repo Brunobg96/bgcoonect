@@ -104,19 +104,59 @@ public class NewOrderAlertService extends Service {
 
     private void playVoice() {
         if (!active) return;
+
         releasePlayer();
+
         try {
-            player = MediaPlayer.create(this, R.raw.novo_pedido);
-            if (player == null) { scheduleNext(); return; }
-            if (Build.VERSION.SDK_INT >= 21) {
-                player.setAudioAttributes(new AudioAttributes.Builder()
-                    .setUsage(AudioAttributes.USAGE_ALARM)
-                    .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION).build());
+            player = new MediaPlayer();
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                player.setAudioAttributes(
+                    new AudioAttributes.Builder()
+                        .setUsage(AudioAttributes.USAGE_ALARM)
+                        .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
+                        .build()
+                );
+            } else {
+                player.setAudioStreamType(android.media.AudioManager.STREAM_ALARM);
             }
-            player.setOnCompletionListener(mp -> { releasePlayer(); scheduleNext(); });
-            player.setOnErrorListener((mp, what, extra) -> { releasePlayer(); scheduleNext(); return true; });
+
+            android.content.res.AssetFileDescriptor afd =
+                getResources().openRawResourceFd(R.raw.novo_pedido);
+
+            if (afd == null) {
+                releasePlayer();
+                scheduleNext();
+                return;
+            }
+
+            player.setDataSource(
+                afd.getFileDescriptor(),
+                afd.getStartOffset(),
+                afd.getLength()
+            );
+            afd.close();
+
+            player.setVolume(1.0f, 1.0f);
+
+            player.setOnCompletionListener(mp -> {
+                releasePlayer();
+                scheduleNext();
+            });
+
+            player.setOnErrorListener((mp, what, extra) -> {
+                releasePlayer();
+                scheduleNext();
+                return true;
+            });
+
+            player.prepare();
             player.start();
-        } catch (Exception e) { releasePlayer(); scheduleNext(); }
+
+        } catch (Exception e) {
+            releasePlayer();
+            scheduleNext();
+        }
     }
 
     private void scheduleNext() {

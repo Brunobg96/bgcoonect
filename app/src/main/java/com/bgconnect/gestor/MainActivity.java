@@ -278,6 +278,25 @@ public class MainActivity extends Activity {
         if (webView.canGoBack()) webView.goBack(); else super.onBackPressed();
     }
 
+    @Override
+    protected void onPause() {
+        CookieManager.getInstance().flush();
+        if (webView != null) webView.onPause();
+        super.onPause();
+    }
+
+    @Override
+    protected void onStop() {
+        CookieManager.getInstance().flush();
+        super.onStop();
+    }
+
+    @Override
+    protected void onDestroy() {
+        CookieManager.getInstance().flush();
+        super.onDestroy();
+    }
+
     @Override protected void onSaveInstanceState(Bundle out) {
         webView.saveState(out); super.onSaveInstanceState(out);
     }
