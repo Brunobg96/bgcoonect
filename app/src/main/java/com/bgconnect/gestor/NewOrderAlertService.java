@@ -191,6 +191,44 @@ public class NewOrderAlertService extends Service {
         stopSelf();
     }
 
-    @Override public void onDestroy() { stopAlertAndSelf(); super.onDestroy(); }
+    @Override
+    public void onTaskRemoved(Intent rootIntent) {
+        if (active) {
+            try {
+                Intent restart = new Intent(this, NewOrderAlertService.class);
+                restart.setAction(ACTION_START);
+                restart.putExtra("order_id", getSaved("order_id", "0"));
+                restart.putExtra("title", getSaved("title", "🔔 Novo pedido - BG CONNECT"));
+                restart.putExtra("body", getSaved("body", "Toque para abrir o pedido."));
+
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    startForegroundService(restart);
+                } else {
+                    startService(restart);
+                }
+            } catch (Exception ignored) {}
+        }
+
+        super.onTaskRemoved(rootIntent);
+    }
+
+    @Override
+    public void onDestroy() {
+        try {
+            if (handler != null) handler.removeCallbacksAndMessages(null);
+        } catch (Exception ignored) {}
+
+        releasePlayer();
+
+        try {
+            if (wakeLock != null && wakeLock.isHeld()) {
+                wakeLock.release();
+            }
+        } catch (Exception ignored) {}
+
+        // NÃO limpar o pedido salvo aqui.
+        // Se o Android destruir o serviço, START_STICKY poderá restaurá-lo.
+        super.onDestroy();
+    }
     @Override public android.os.IBinder onBind(Intent intent) { return null; }
 }
