@@ -1,0 +1,19 @@
+{
+    "logs": [
+        {
+            "outputFile": "com.bgconnect.gestor.app-mergeDebugResources-8:/values-en-rXC/values-en-rXC.xml",
+            "map": [
+                {
+                    "source": "/home/codespace/.gradle/caches/transforms-4/a4b8bcf371f16e305a073dd40bc8a799/transformed/core-1.2.0/res/values-en-rXC/values-en-rXC.xml",
+                    "from": {
+                        "startLines": "2",
+                        "startColumns": "4",
+                        "startOffsets": "55",
+                        "endColumns": "203",
+                        "endOffsets": "254"
+                    }
+                }
+            ]
+        }
+    ]
+}

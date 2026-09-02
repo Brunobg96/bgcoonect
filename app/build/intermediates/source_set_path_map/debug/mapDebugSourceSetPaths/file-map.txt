@@ -1,0 +1,13 @@
+com.bgconnect.gestor.app-play-services-base-18.0.1-0 /home/codespace/.gradle/caches/transforms-4/154ccb51ff5daf07454f427354cae34a/transformed/play-services-base-18.0.1/res
+com.bgconnect.gestor.app-firebase-messaging-24.1.0-1 /home/codespace/.gradle/caches/transforms-4/231dadd2930fcad7acf6ac08222194f7/transformed/firebase-messaging-24.1.0/res
+com.bgconnect.gestor.app-play-services-basement-18.3.0-2 /home/codespace/.gradle/caches/transforms-4/94a54827491979c0dbb196f148c0738e/transformed/play-services-basement-18.3.0/res
+com.bgconnect.gestor.app-core-1.2.0-3 /home/codespace/.gradle/caches/transforms-4/a4b8bcf371f16e305a073dd40bc8a799/transformed/core-1.2.0/res
+com.bgconnect.gestor.app-firebase-common-21.0.0-4 /home/codespace/.gradle/caches/transforms-4/f5d295aafaa5df8683b013399530511f/transformed/firebase-common-21.0.0/res
+com.bgconnect.gestor.app-pngs-5 /workspaces/bgcoonect/app/build/generated/res/pngs/debug
+com.bgconnect.gestor.app-res-6 /workspaces/bgcoonect/app/build/generated/res/processDebugGoogleServices
+com.bgconnect.gestor.app-resValues-7 /workspaces/bgcoonect/app/build/generated/res/resValues/debug
+com.bgconnect.gestor.app-packageDebugResources-8 /workspaces/bgcoonect/app/build/intermediates/incremental/debug/packageDebugResources/merged.dir
+com.bgconnect.gestor.app-packageDebugResources-9 /workspaces/bgcoonect/app/build/intermediates/incremental/debug/packageDebugResources/stripped.dir
+com.bgconnect.gestor.app-debug-10 /workspaces/bgcoonect/app/build/intermediates/merged_res/debug/mergeDebugResources
+com.bgconnect.gestor.app-debug-11 /workspaces/bgcoonect/app/src/debug/res
+com.bgconnect.gestor.app-main-12 /workspaces/bgcoonect/app/src/main/res
