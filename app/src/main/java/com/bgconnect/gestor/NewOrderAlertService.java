@@ -9,7 +9,7 @@ import android.os.*;
 public class NewOrderAlertService extends Service {
     public static final String ACTION_START = "com.bgconnect.gestor.START_ORDER_ALERT";
     public static final String ACTION_STOP = "com.bgconnect.gestor.STOP_ORDER_ALERT";
-    private static final String CHANNEL = "bgconnect_pending_order_alert_v1";
+    private static final String CHANNEL = "bgconnect_pending_order_alert_voice_v2";
     private static final int NOTIFICATION_ID = 9917;
     private static final long REPEAT_DELAY_MS = 5000L;
     private static final String PREF = "bgconnect_active_alert";
@@ -87,7 +87,12 @@ public class NewOrderAlertService extends Service {
         NotificationManager nm = getSystemService(NotificationManager.class);
         NotificationChannel c = new NotificationChannel(CHANNEL, "Pedido aguardando atendimento", NotificationManager.IMPORTANCE_HIGH);
         c.setDescription("Mantém o aviso ativo enquanto houver pedido novo aguardando atendimento");
-        c.setSound(null, null);
+        Uri sound = Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.novo_pedido);
+        AudioAttributes attrs = new AudioAttributes.Builder()
+            .setUsage(AudioAttributes.USAGE_ALARM)
+            .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
+            .build();
+        c.setSound(sound, attrs);
         c.enableVibration(false);
         c.setLockscreenVisibility(Notification.VISIBILITY_PUBLIC);
         c.setShowBadge(true);
