@@ -30,35 +30,6 @@ public class MainActivity extends Activity {
 
         stopOrderAlert(getIntent());
 
-        FirebaseMessaging.getInstance().getToken()
-                .addOnCompleteListener(task -> {
-                    if (!task.isSuccessful()) {
-                        Log.e("BGCONNECT_FCM", "Falha ao obter token FCM", task.getException());
-                        return;
-                    }
-
-                    String token = task.getResult();
-                    Log.d("BGCONNECT_FCM", "TOKEN=" + token);
-
-                    runOnUiThread(() -> {
-                        new AlertDialog.Builder(MainActivity.this)
-                                .setTitle("Token Firebase")
-                                .setMessage(token)
-                                .setCancelable(false)
-                                .setPositiveButton("Copiar", (dialog, which) -> {
-                                    ClipboardManager clipboard =
-                                            (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
-
-                                    clipboard.setPrimaryClip(
-                                        ClipData.newPlainText("FCM Token", token)
-                                    );
-                                })
-                                .setNegativeButton("Fechar", null)
-                                .show();
-                    });
-                    Toast.makeText(MainActivity.this, token, Toast.LENGTH_LONG).show();
-                });
-
         webView = new WebView(this);
         setContentView(webView);
 

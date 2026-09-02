@@ -8,6 +8,8 @@
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE_MEDIA_PLAYBACK" />
 
     <application
+        android:icon="@drawable/bgconnect_icon"
+        android:roundIcon="@drawable/bgconnect_icon"
         android:allowBackup="true"
         android:label="BG CONNECT Gestor"
         android:theme="@style/AppTheme"

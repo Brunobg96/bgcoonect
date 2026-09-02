@@ -1,9 +1,9 @@
 -- Merging decision tree log ---
 manifest
-ADDED from /workspaces/bgcoonect/app/src/main/AndroidManifest.xml:2:1-45:12
-INJECTED from /workspaces/bgcoonect/app/src/main/AndroidManifest.xml:2:1-45:12
-INJECTED from /workspaces/bgcoonect/app/src/main/AndroidManifest.xml:2:1-45:12
-INJECTED from /workspaces/bgcoonect/app/src/main/AndroidManifest.xml:2:1-45:12
+ADDED from /workspaces/bgcoonect/app/src/main/AndroidManifest.xml:2:1-47:12
+INJECTED from /workspaces/bgcoonect/app/src/main/AndroidManifest.xml:2:1-47:12
+INJECTED from /workspaces/bgcoonect/app/src/main/AndroidManifest.xml:2:1-47:12
+INJECTED from /workspaces/bgcoonect/app/src/main/AndroidManifest.xml:2:1-47:12
 MERGED from [com.google.firebase:firebase-messaging:24.1.0] /home/codespace/.gradle/caches/transforms-4/231dadd2930fcad7acf6ac08222194f7/transformed/firebase-messaging-24.1.0/AndroidManifest.xml:17:1-66:12
 MERGED from [com.google.firebase:firebase-datatransport:18.2.0] /home/codespace/.gradle/caches/transforms-4/c2d4631bcdef974028476e6539178c90/transformed/firebase-datatransport-18.2.0/AndroidManifest.xml:15:1-31:12
 MERGED from [com.google.android.datatransport:transport-backend-cct:3.1.9] /home/codespace/.gradle/caches/transforms-4/4785db97f4cd63bb0d906ddca0285e2a/transformed/transport-backend-cct-3.1.9/AndroidManifest.xml:15:1-37:12
@@ -72,8 +72,8 @@ ADDED from /workspaces/bgcoonect/app/src/main/AndroidManifest.xml:8:5-92
 	android:name
 		ADDED from /workspaces/bgcoonect/app/src/main/AndroidManifest.xml:8:22-89
 application
-ADDED from /workspaces/bgcoonect/app/src/main/AndroidManifest.xml:10:5-43:19
-INJECTED from /workspaces/bgcoonect/app/src/main/AndroidManifest.xml:10:5-43:19
+ADDED from /workspaces/bgcoonect/app/src/main/AndroidManifest.xml:10:5-45:19
+INJECTED from /workspaces/bgcoonect/app/src/main/AndroidManifest.xml:10:5-45:19
 MERGED from [com.google.firebase:firebase-messaging:24.1.0] /home/codespace/.gradle/caches/transforms-4/231dadd2930fcad7acf6ac08222194f7/transformed/firebase-messaging-24.1.0/AndroidManifest.xml:28:5-64:19
 MERGED from [com.google.firebase:firebase-messaging:24.1.0] /home/codespace/.gradle/caches/transforms-4/231dadd2930fcad7acf6ac08222194f7/transformed/firebase-messaging-24.1.0/AndroidManifest.xml:28:5-64:19
 MERGED from [com.google.firebase:firebase-datatransport:18.2.0] /home/codespace/.gradle/caches/transforms-4/c2d4631bcdef974028476e6539178c90/transformed/firebase-datatransport-18.2.0/AndroidManifest.xml:21:5-29:19
@@ -109,51 +109,55 @@ MERGED from [androidx.versionedparcelable:versionedparcelable:1.1.0] /home/codes
 	android:appComponentFactory
 		ADDED from [androidx.core:core:1.2.0] /home/codespace/.gradle/caches/transforms-4/a4b8bcf371f16e305a073dd40bc8a799/transformed/core-1.2.0/AndroidManifest.xml:24:18-86
 	android:label
-		ADDED from /workspaces/bgcoonect/app/src/main/AndroidManifest.xml:12:9-42
+		ADDED from /workspaces/bgcoonect/app/src/main/AndroidManifest.xml:14:9-42
+	android:roundIcon
+		ADDED from /workspaces/bgcoonect/app/src/main/AndroidManifest.xml:12:9-53
+	android:icon
+		ADDED from /workspaces/bgcoonect/app/src/main/AndroidManifest.xml:11:9-48
 	android:allowBackup
-		ADDED from /workspaces/bgcoonect/app/src/main/AndroidManifest.xml:11:9-35
+		ADDED from /workspaces/bgcoonect/app/src/main/AndroidManifest.xml:13:9-35
 	android:theme
-		ADDED from /workspaces/bgcoonect/app/src/main/AndroidManifest.xml:13:9-40
+		ADDED from /workspaces/bgcoonect/app/src/main/AndroidManifest.xml:15:9-40
 	android:usesCleartextTraffic
-		ADDED from /workspaces/bgcoonect/app/src/main/AndroidManifest.xml:14:9-45
+		ADDED from /workspaces/bgcoonect/app/src/main/AndroidManifest.xml:16:9-45
 service#com.bgconnect.gestor.PedidoAlertService
-ADDED from /workspaces/bgcoonect/app/src/main/AndroidManifest.xml:18:9-22:61
+ADDED from /workspaces/bgcoonect/app/src/main/AndroidManifest.xml:20:9-24:61
 	android:enabled
-		ADDED from /workspaces/bgcoonect/app/src/main/AndroidManifest.xml:20:13-35
+		ADDED from /workspaces/bgcoonect/app/src/main/AndroidManifest.xml:22:13-35
 	android:exported
-		ADDED from /workspaces/bgcoonect/app/src/main/AndroidManifest.xml:21:13-37
+		ADDED from /workspaces/bgcoonect/app/src/main/AndroidManifest.xml:23:13-37
 	android:foregroundServiceType
-		ADDED from /workspaces/bgcoonect/app/src/main/AndroidManifest.xml:22:13-58
+		ADDED from /workspaces/bgcoonect/app/src/main/AndroidManifest.xml:24:13-58
 	android:name
-		ADDED from /workspaces/bgcoonect/app/src/main/AndroidManifest.xml:19:13-47
+		ADDED from /workspaces/bgcoonect/app/src/main/AndroidManifest.xml:21:13-47
 service#com.bgconnect.gestor.BGConnectMessagingService
-ADDED from /workspaces/bgcoonect/app/src/main/AndroidManifest.xml:24:9-30:19
+ADDED from /workspaces/bgcoonect/app/src/main/AndroidManifest.xml:26:9-32:19
 	android:exported
-		ADDED from /workspaces/bgcoonect/app/src/main/AndroidManifest.xml:26:13-37
+		ADDED from /workspaces/bgcoonect/app/src/main/AndroidManifest.xml:28:13-37
 	android:name
-		ADDED from /workspaces/bgcoonect/app/src/main/AndroidManifest.xml:25:13-54
+		ADDED from /workspaces/bgcoonect/app/src/main/AndroidManifest.xml:27:13-54
 intent-filter#action:name:com.google.firebase.MESSAGING_EVENT
-ADDED from /workspaces/bgcoonect/app/src/main/AndroidManifest.xml:27:13-29:29
+ADDED from /workspaces/bgcoonect/app/src/main/AndroidManifest.xml:29:13-31:29
 action#com.google.firebase.MESSAGING_EVENT
-ADDED from /workspaces/bgcoonect/app/src/main/AndroidManifest.xml:28:17-78
+ADDED from /workspaces/bgcoonect/app/src/main/AndroidManifest.xml:30:17-78
 	android:name
-		ADDED from /workspaces/bgcoonect/app/src/main/AndroidManifest.xml:28:25-75
+		ADDED from /workspaces/bgcoonect/app/src/main/AndroidManifest.xml:30:25-75
 activity#com.bgconnect.gestor.MainActivity
-ADDED from /workspaces/bgcoonect/app/src/main/AndroidManifest.xml:32:9-41:20
+ADDED from /workspaces/bgcoonect/app/src/main/AndroidManifest.xml:34:9-43:20
 	android:exported
-		ADDED from /workspaces/bgcoonect/app/src/main/AndroidManifest.xml:34:13-36
+		ADDED from /workspaces/bgcoonect/app/src/main/AndroidManifest.xml:36:13-36
 	android:name
-		ADDED from /workspaces/bgcoonect/app/src/main/AndroidManifest.xml:33:13-41
+		ADDED from /workspaces/bgcoonect/app/src/main/AndroidManifest.xml:35:13-41
 intent-filter#action:name:android.intent.action.MAIN+category:name:android.intent.category.LAUNCHER
-ADDED from /workspaces/bgcoonect/app/src/main/AndroidManifest.xml:36:13-39:29
+ADDED from /workspaces/bgcoonect/app/src/main/AndroidManifest.xml:38:13-41:29
 action#android.intent.action.MAIN
-ADDED from /workspaces/bgcoonect/app/src/main/AndroidManifest.xml:37:17-69
+ADDED from /workspaces/bgcoonect/app/src/main/AndroidManifest.xml:39:17-69
 	android:name
-		ADDED from /workspaces/bgcoonect/app/src/main/AndroidManifest.xml:37:25-66
+		ADDED from /workspaces/bgcoonect/app/src/main/AndroidManifest.xml:39:25-66
 category#android.intent.category.LAUNCHER
-ADDED from /workspaces/bgcoonect/app/src/main/AndroidManifest.xml:38:17-77
+ADDED from /workspaces/bgcoonect/app/src/main/AndroidManifest.xml:40:17-77
 	android:name
-		ADDED from /workspaces/bgcoonect/app/src/main/AndroidManifest.xml:38:27-74
+		ADDED from /workspaces/bgcoonect/app/src/main/AndroidManifest.xml:40:27-74
 uses-sdk
 INJECTED from /workspaces/bgcoonect/app/src/main/AndroidManifest.xml reason: use-sdk injection requested
 INJECTED from /workspaces/bgcoonect/app/src/main/AndroidManifest.xml

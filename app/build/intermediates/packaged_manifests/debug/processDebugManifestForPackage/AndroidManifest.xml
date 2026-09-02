@@ -21,7 +21,9 @@
         android:appComponentFactory="androidx.core.app.CoreComponentFactory"
         android:debuggable="true"
         android:extractNativeLibs="false"
+        android:icon="@drawable/bgconnect_icon"
         android:label="BG CONNECT Gestor"
+        android:roundIcon="@drawable/bgconnect_icon"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="false" >
         <service

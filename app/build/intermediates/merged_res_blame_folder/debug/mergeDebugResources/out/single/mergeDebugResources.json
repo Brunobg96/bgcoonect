@@ -1,6 +1,10 @@
 [
     {
-        "merged": "com.bgconnect.gestor.app-debug-10:/raw_novo_pedido.mp3.flat",
-        "source": "com.bgconnect.gestor.app-main-12:/raw/novo_pedido.mp3"
+        "merged": "/home/codespace/.gradle/daemon/8.7/com.bgconnect.gestor.app-debug-10:/raw_novo_pedido.mp3.flat",
+        "source": "/home/codespace/.gradle/daemon/8.7/com.bgconnect.gestor.app-main-12:/raw/novo_pedido.mp3"
+    },
+    {
+        "merged": "com.bgconnect.gestor.app-debug-10:/drawable_bgconnect_icon.png.flat",
+        "source": "com.bgconnect.gestor.app-main-12:/drawable/bgconnect_icon.png"
     }
 ]
